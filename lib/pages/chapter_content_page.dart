@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_reader/types/book.dart';
 import 'package:sizer/sizer.dart';
+import 'package:styled_text/styled_text.dart';
 
 import '../components/book_list_item.dart';
 import '../api/queries.dart';
@@ -37,9 +38,15 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                   child: SingleChildScrollView(
                     child: Container(
                       child:
-                      Text(snapshot.data.content)
-                      // Html(data: snapshot.data.content)
-                      ,
+                      StyledText(
+                        text: snapshot.data.content,
+                        tags: {
+                          'strong': StyledTextTag(style: TextStyle(fontWeight: FontWeight.bold)),
+                          'em': StyledTextTag(style: TextStyle(fontStyle: FontStyle.italic))
+                        },
+                      ),
+                      // Text(snapshot.data.content),
+                      // Html(data: snapshot.data.content),
                     ),
                   ),
                 );

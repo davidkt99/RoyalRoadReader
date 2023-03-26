@@ -15,7 +15,8 @@ class Chapter {
     return Chapter(
       id: json['id'],
       name: parseHtmlString(json['name']),
-      content: parseHtmlString(json['content']),
+      content: json['content'],
+      // content: parseHtmlString(json['content']),
     );
   }
 }
