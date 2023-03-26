@@ -1,9 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:royal_reader/pages/books_page.dart';
+import 'package:royal_reader/pages/chapters_page.dart';
+import 'package:sizer/sizer.dart';
+
 
 void main() {
   runApp(const MyApp());
 }
+
+/// The route configuration.
+final GoRouter _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const BooksPage(title: 'Books');
+      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'book/:id',
+          builder: (BuildContext context, GoRouterState state) {
+            return ChaptersPage(id: int.parse(state.params['id']!), bookName: state.queryParams['name']!);
+          },
+        ),
+      ],
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,11 +35,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const BooksPage(title: 'Books'),
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          routerConfig: _router,
+        );
+      }
     );
   }
 }

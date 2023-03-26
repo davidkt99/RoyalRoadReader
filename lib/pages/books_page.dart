@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:royal_reader/types/book.dart';
+import 'package:sizer/sizer.dart';
 
 import '../components/book_list_item.dart';
 import '../api/queries.dart';
@@ -14,16 +16,14 @@ class BooksPage extends StatefulWidget {
 }
 
 class _BooksPageState extends State<BooksPage> {
-  List<Book> books = [];
 
-  void handleFetchBooks() async{
-    books = await fetchBooks();
+  void _handleBookPressed(int id, String name){
+    debugPrint('$id pressed');
+    context.go(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    /// Fetches Books
-    handleFetchBooks();
 
     return Scaffold(
       appBar: AppBar(
@@ -36,15 +36,14 @@ class _BooksPageState extends State<BooksPage> {
             if (snapshot.hasData) {
               // if data is loaded
               return ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemExtent: 20.0,
+                padding: EdgeInsets.all(4.w),
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int i) {
                   return Center(
-                    child: Text(
-                      snapshot.data[i].name,
-                      style: const TextStyle(color: Colors.black, fontSize: 17.0),
-                      textAlign: TextAlign.center,
+                    child: BookListItem(
+                      id: snapshot.data[i].id,
+                      name: snapshot.data[i].name,
+                      handleBookPressed: _handleBookPressed,
                     ),
                   );
                 },
