@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
@@ -36,13 +37,15 @@ class _ChaptersPageState extends State<ChaptersPage> {
             future: fetchChapterNamesAndIds(widget.id), // your async method that returns a future
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                var chapterList = List.from(snapshot.data.reversed);
                 // if data is loaded
                 return ListView.builder(
                   padding: EdgeInsets.all(4.w),
-                  itemCount: snapshot.data.length,
+                  itemCount: chapterList.length,
+                  reverse: true,
                   itemBuilder: (BuildContext context, int i) {
                     return Center(
-                      child: ChapterListItem(id: snapshot.data[i].id, name: snapshot.data[i].name, handleChapterPressed: _handleChapterPressed,)
+                      child: ChapterListItem(id: chapterList[i].id, name: chapterList[i].name, handleChapterPressed: _handleChapterPressed,)
                     );
                   },
                 ).build(context);
