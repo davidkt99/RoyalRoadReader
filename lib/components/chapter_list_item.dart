@@ -13,7 +13,7 @@ class ChapterListItem extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          handleChapterPressed;
+          handleChapterPressed(id, name);
         },
         child: Padding(
           padding: EdgeInsets.all(4.w),

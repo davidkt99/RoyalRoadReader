@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/pages/books_page.dart';
-import 'package:royal_reader/pages/chapters_page.dart';
+import 'package:royal_reader/pages/books_list_page.dart';
+import 'package:royal_reader/pages/chapter_content_page.dart';
+import 'package:royal_reader/pages/chapters_list_page.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -22,6 +23,12 @@ final GoRouter _router = GoRouter(
           path: 'book/:id',
           builder: (BuildContext context, GoRouterState state) {
             return ChaptersPage(id: int.parse(state.params['id']!), bookName: state.queryParams['name']!);
+          },
+        ),
+        GoRoute(
+          path: 'chapter/:id',
+          builder: (BuildContext context, GoRouterState state) {
+            return ChapterContentPage(id: int.parse(state.params['id']!), title: state.queryParams['name']!);
           },
         ),
       ],

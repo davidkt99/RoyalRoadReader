@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 
 import '../components/book_list_item.dart';
@@ -16,6 +17,11 @@ class ChaptersPage extends StatefulWidget {
 }
 
 class _ChaptersPageState extends State<ChaptersPage> {
+
+  void _handleChapterPressed(int id, String name){
+    debugPrint('$id pressed');
+    context.go(Uri(path: '/chapter/$id', queryParameters: {'name': name}).toString());
+  }
 
 
   @override
@@ -36,7 +42,7 @@ class _ChaptersPageState extends State<ChaptersPage> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (BuildContext context, int i) {
                     return Center(
-                      child: ChapterListItem(id: snapshot.data[i].id, name: snapshot.data[i].name, handleChapterPressed: () {},)
+                      child: ChapterListItem(id: snapshot.data[i].id, name: snapshot.data[i].name, handleChapterPressed: _handleChapterPressed,)
                     );
                   },
                 ).build(context);

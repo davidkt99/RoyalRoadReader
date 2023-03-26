@@ -19,7 +19,6 @@ Future<List<Book>> fetchBooks() async {
   return books;
 }
 
-/// Chapters will have null contents
 Future<List<ChapterNameId>> fetchChapterNamesAndIds(int id) async {
   List<ChapterNameId> chapters = [];
   var res = await http.get(Uri.parse('$url/chapter/all/nameId/$id'));
@@ -28,4 +27,11 @@ Future<List<ChapterNameId>> fetchChapterNamesAndIds(int id) async {
   }
 
   return chapters;
+}
+
+Future<Chapter> fetchChapter(int id) async {
+  var res = await http.get(Uri.parse('$url/chapter/$id'));
+  var jsonChapter = jsonDecode(res.body);
+
+  return Chapter.fromJson(jsonChapter);
 }
