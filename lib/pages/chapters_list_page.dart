@@ -21,7 +21,7 @@ class _ChaptersPageState extends State<ChaptersPage> {
 
   void _handleChapterPressed(int id, String name){
     debugPrint('$id pressed');
-    context.go(Uri(path: '/chapter/$id', queryParameters: {'name': name}).toString());
+    context.push(Uri(path: '/chapter/$id', queryParameters: {'name': name}).toString());
   }
 
 

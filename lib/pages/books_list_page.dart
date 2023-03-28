@@ -19,7 +19,7 @@ class _BooksPageState extends State<BooksPage> {
 
   void _handleBookPressed(int id, String name){
     debugPrint('$id pressed');
-    context.go(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
+    context.push(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
   }
 
   @override
