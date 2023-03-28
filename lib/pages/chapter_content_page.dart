@@ -43,17 +43,12 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                   return Padding(
                     padding: EdgeInsets.all(4.w),
                     child: SingleChildScrollView(
-                      child: Container(
-                        child:
-                        StyledText(
-                          text: snapshot.data.content,
-                          tags: {
-                            'strong': StyledTextTag(style: TextStyle(fontWeight: FontWeight.bold)),
-                            'em': StyledTextTag(style: TextStyle(fontStyle: FontStyle.italic))
-                          },
-                        ),
-                        // Text(snapshot.data.content),
-                        // Html(data: snapshot.data.content),
+                      child: StyledText(
+                        text: snapshot.data.content,
+                        tags: {
+                          'strong': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
+                          'em': StyledTextTag(style: const TextStyle(fontStyle: FontStyle.italic))
+                        },
                       ),
                     ),
                   );
