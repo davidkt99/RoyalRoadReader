@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:royal_reader/types/chapterNameId.dart';
 import 'package:sizer/sizer.dart';
 
 import '../components/book_list_item.dart';
@@ -24,6 +25,9 @@ class _ChaptersPageState extends State<ChaptersPage> {
     context.push(Uri(path: '/chapter/$id', queryParameters: {'name': name}).toString());
   }
 
+  Future<Future<List<ChapterNameId>>> _refreshChapters(BuildContext context, int id) async {
+    return fetchChapterNamesAndIds(id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,27 +37,29 @@ class _ChaptersPageState extends State<ChaptersPage> {
         title: Text(widget.bookName),
       ),
       body: Center(
-          child: FutureBuilder(
-            future: fetchChapterNamesAndIds(widget.id), // your async method that returns a future
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                var chapterList = List.from(snapshot.data.reversed);
-                // if data is loaded
-                return ListView.builder(
-                  padding: EdgeInsets.all(4.w),
-                  itemCount: chapterList.length,
-                  reverse: true,
-                  itemBuilder: (BuildContext context, int i) {
-                    return Center(
-                      child: ChapterListItem(id: chapterList[i].id, name: chapterList[i].name, handleChapterPressed: _handleChapterPressed,)
-                    );
-                  },
-                ).build(context);
-              } else {
-                // if data not loaded yet
-                return const CircularProgressIndicator();
-              }
-            },
+          child: RefreshIndicator(
+            onRefresh: () => _refreshChapters(context, widget.id),
+            child: FutureBuilder(
+              future: fetchChapterNamesAndIds(widget.id), // your async method that returns a future
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  var chapterList = List.from(snapshot.data.reversed);
+                  // if data is loaded
+                  return ListView.builder(
+                    padding: EdgeInsets.all(4.w),
+                    itemCount: chapterList.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Center(
+                        child: ChapterListItem(id: chapterList[i].id, name: chapterList[i].name, handleChapterPressed: _handleChapterPressed,)
+                      );
+                    },
+                  ).build(context);
+                } else {
+                  // if data not loaded yet
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
           )
       ),
     );

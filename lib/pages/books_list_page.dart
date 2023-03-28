@@ -22,6 +22,10 @@ class _BooksPageState extends State<BooksPage> {
     context.push(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
   }
 
+  Future<Future<List<Book>>> _refreshBooks(BuildContext context) async {
+    return fetchBooks();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -30,29 +34,32 @@ class _BooksPageState extends State<BooksPage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: FutureBuilder(
-          future: fetchBooks(), // your async method that returns a future
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              // if data is loaded
-              return ListView.builder(
-                padding: EdgeInsets.all(4.w),
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int i) {
-                  return Center(
-                    child: BookListItem(
-                      id: snapshot.data[i].id,
-                      name: snapshot.data[i].name,
-                      handleBookPressed: _handleBookPressed,
-                    ),
-                  );
-                },
-              ).build(context);
-            } else {
-              // if data not loaded yet
-              return const CircularProgressIndicator();
-            }
-          },
+        child: RefreshIndicator(
+          onRefresh: () => _refreshBooks(context),
+          child: FutureBuilder(
+            future: fetchBooks(), // your async method that returns a future
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                // if data is loaded
+                return ListView.builder(
+                  padding: EdgeInsets.all(4.w),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    return Center(
+                      child: BookListItem(
+                        id: snapshot.data[i].id,
+                        name: snapshot.data[i].name,
+                        handleBookPressed: _handleBookPressed,
+                      ),
+                    );
+                  },
+                ).build(context);
+              } else {
+                // if data not loaded yet
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
         )
       ),
     );
