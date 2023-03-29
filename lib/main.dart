@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_reader/pages/books_list_page.dart';
@@ -21,14 +23,16 @@ final GoRouter _router = GoRouter(
       routes: <RouteBase>[
         GoRoute(
           path: 'book/:id',
+          name: "book",
           builder: (BuildContext context, GoRouterState state) {
             return ChaptersPage(id: int.parse(state.params['id']!), bookName: state.queryParams['name']!);
           },
         ),
         GoRoute(
           path: 'chapter/:id',
+          name: "chapter",
           builder: (BuildContext context, GoRouterState state) {
-            return ChapterContentPage(id: int.parse(state.params['id']!), title: state.queryParams['name']!);
+            return ChapterContentPage(id: int.parse(state.params['id']!), chapters: state.extra as List,);
           },
         ),
       ],

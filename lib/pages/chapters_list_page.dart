@@ -20,9 +20,9 @@ class ChaptersPage extends StatefulWidget {
 
 class _ChaptersPageState extends State<ChaptersPage> {
 
-  void _handleChapterPressed(int id, String name){
+  void _handleChapterPressed(int id, String name, List chapters){
     debugPrint('$id pressed');
-    context.push(Uri(path: '/chapter/$id', queryParameters: {'name': name}).toString());
+    context.pushNamed("chapter", params: {"id":id.toString()}, extra: chapters);
   }
 
   Future<Future<List<ChapterNameId>>> _refreshChapters(BuildContext context, int id) async {
@@ -43,14 +43,14 @@ class _ChaptersPageState extends State<ChaptersPage> {
               future: fetchChapterNamesAndIds(widget.id), // your async method that returns a future
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  var chapterList = List.from(snapshot.data.reversed);
+                  List chapterList = List.from(snapshot.data.reversed);
                   // if data is loaded
                   return ListView.builder(
                     padding: EdgeInsets.all(4.w),
                     itemCount: chapterList.length,
                     itemBuilder: (BuildContext context, int i) {
                       return Center(
-                        child: ChapterListItem(id: chapterList[i].id, name: chapterList[i].name, handleChapterPressed: _handleChapterPressed,)
+                        child: ChapterListItem(id: i, name: chapterList[i].name, handleChapterPressed: _handleChapterPressed, chapters: chapterList,)
                       );
                     },
                   ).build(context);
