@@ -59,7 +59,6 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                     padding: EdgeInsets.only(
                       right: 4.w,
                       left: 4.w,
-                      bottom: 4.h
                     ),
                     child: SingleChildScrollView(
                       child: Column(
@@ -94,6 +93,9 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                               )
                             ],
                           ),
+                          SizedBox(
+                            height: 4.h,
+                          )
                         ],
                       ),
                     ),
