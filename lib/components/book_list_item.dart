@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class BookListItem extends StatelessWidget {
-  const BookListItem({Key? key, required this.id, required this.name, required this.handleBookPressed}) : super(key: key);
+  const BookListItem({Key? key, required this.id, required this.name, required this.handleBookPressed, required this.numOfChap}) : super(key: key);
 
   final int id;
   final String name;
   final Function handleBookPressed;
+  final int numOfChap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class BookListItem extends StatelessWidget {
             height: 8.h,
             width: 90.h,
             child: Text(
-              name,
+              name + " - " + numOfChap.toString(),
               style: TextStyle(color: Colors.black, fontSize: 2.h),
               textAlign: TextAlign.center,
             ),

@@ -50,6 +50,7 @@ class _BooksPageState extends State<BooksPage> {
                         id: snapshot.data[i].id,
                         name: snapshot.data[i].name,
                         handleBookPressed: _handleBookPressed,
+                        numOfChap: snapshot.data[i].numOfChap,
                       ),
                     );
                   },
