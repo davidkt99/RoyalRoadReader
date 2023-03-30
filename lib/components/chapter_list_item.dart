@@ -22,7 +22,7 @@ class ChapterListItem extends StatelessWidget {
             height: 8.h,
             width: 90.h,
             child: Text(
-              name + " - " + chapters[id].id.toString(),
+              "$name - ${chapters[id].id}",
               style: TextStyle(color: Colors.black, fontSize: 2.h),
               textAlign: TextAlign.center,
             ),

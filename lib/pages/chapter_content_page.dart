@@ -1,13 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/types/book.dart';
 import 'package:royal_reader/types/chapter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:styled_text/styled_text.dart';
 
-import '../components/book_list_item.dart';
 import '../api/queries.dart';
 import '../util/style.dart';
 
@@ -34,7 +31,7 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
     }
 
 
-    Future<Future<Chapter>> _refreshContent(BuildContext context, int id, List chapters) async {
+    Future<Future<Chapter>> refreshContent(BuildContext context, int id, List chapters) async {
       return fetchChapter(chapters[id].id);
     }
 
@@ -52,7 +49,7 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
       ),
       body: Center(
           child: RefreshIndicator(
-            onRefresh: () => _refreshContent(context, widget.id, widget.chapters),
+            onRefresh: () => refreshContent(context, widget.id, widget.chapters),
             child: FutureBuilder(
               future: fetchChapter(widget.chapters[widget.id].id), // your async method that returns a future
               builder: (BuildContext context, AsyncSnapshot snapshot) {

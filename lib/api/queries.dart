@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:royal_reader/types/book.dart';
 import 'package:royal_reader/types/chapter.dart';

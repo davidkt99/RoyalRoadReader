@@ -1,10 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_reader/types/chapterNameId.dart';
 import 'package:sizer/sizer.dart';
 
-import '../components/book_list_item.dart';
 import '../api/queries.dart';
 import '../components/chapter_list_item.dart';
 

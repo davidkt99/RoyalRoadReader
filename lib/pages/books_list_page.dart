@@ -17,12 +17,12 @@ class BooksPage extends StatefulWidget {
 
 class _BooksPageState extends State<BooksPage> {
 
-  void _handleBookPressed(int id, String name){
+  void handleBookPressed(int id, String name){
     debugPrint('$id pressed');
     context.push(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
   }
 
-  Future<Future<List<Book>>> _refreshBooks(BuildContext context) async {
+  Future<Future<List<Book>>> refreshBooks(BuildContext context) async {
     return fetchBooks();
   }
 
@@ -35,7 +35,7 @@ class _BooksPageState extends State<BooksPage> {
       ),
       body: Center(
         child: RefreshIndicator(
-          onRefresh: () => _refreshBooks(context),
+          onRefresh: () => refreshBooks(context),
           child: FutureBuilder(
             future: fetchBooks(), // your async method that returns a future
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -49,7 +49,7 @@ class _BooksPageState extends State<BooksPage> {
                       child: BookListItem(
                         id: snapshot.data[i].id,
                         name: snapshot.data[i].name,
-                        handleBookPressed: _handleBookPressed,
+                        handleBookPressed: handleBookPressed,
                         numOfChap: snapshot.data[i].numOfChap,
                       ),
                     );
