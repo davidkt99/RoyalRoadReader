@@ -2,26 +2,31 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:royal_reader/types/book.dart';
 import 'package:royal_reader/types/chapter.dart';
 
 import '../types/chapterNameId.dart';
 
-const url = "http://192.168.1.238:8080";
+const url = "http://localhost:8080";
 const timeout = Duration(seconds: 2);
 
 Future<List<Book>> fetchBooks() async {
   List<Book> books = [];
   try{
     var res = await http.get(Uri.parse('$url/books')).timeout(timeout);
-    for (var jsonBook in jsonDecode(res.body)){
-      books.add(Book.fromJson(jsonBook));
+    var jsonResponse = jsonDecode(res.body);
+    if(jsonResponse["status"] == 200) {
+      for (var jsonBook in jsonResponse["data"]){
+        books.add(Book.fromJson(jsonBook));
+      }
+      debugPrint(jsonResponse);
+    }else{
+      throw jsonResponse['message'];
     }
-  } on TimeoutException catch (_) {
-    // A timeout occurred.
-  } on SocketException catch (_) {
-    // Other exception
+  } catch (e) {
+    return Future.error(e.toString());
   }
 
 

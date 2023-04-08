@@ -55,7 +55,9 @@ class _BooksPageState extends State<BooksPage> {
                     );
                   },
                 ).build(context);
-              } else {
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }else {
                 // if data not loaded yet
                 return const CircularProgressIndicator();
               }
