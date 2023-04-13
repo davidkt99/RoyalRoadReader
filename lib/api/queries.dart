@@ -1,8 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:royal_reader/types/book.dart';
 import 'package:royal_reader/types/chapter.dart';
@@ -17,11 +14,10 @@ Future<List<Book>> fetchBooks() async {
   try{
     var res = await http.get(Uri.parse('$url/books')).timeout(timeout);
     var jsonResponse = jsonDecode(res.body);
-    if(jsonResponse["status"] == 200) {
-      for (var jsonBook in jsonResponse["data"]){
+    if(res.statusCode == 200) {
+      for (var jsonBook in jsonResponse){
         books.add(Book.fromJson(jsonBook));
       }
-      debugPrint(jsonResponse);
     }else{
       throw jsonResponse['message'];
     }
@@ -35,17 +31,39 @@ Future<List<Book>> fetchBooks() async {
 
 Future<List<ChapterNameId>> fetchChapterNamesAndIds(int id) async {
   List<ChapterNameId> chapters = [];
-  var res = await http.get(Uri.parse('$url/chapter/all/nameId/$id')).timeout(timeout);
-  for (var jsonChapter in jsonDecode(res.body)){
-    chapters.add(ChapterNameId.fromJson(jsonChapter));
+  try{
+    var res = await http.get(Uri.parse('$url/chapter/all/nameId/$id')).timeout(timeout);
+    var jsonResponse = jsonDecode(res.body);
+
+    if(res.statusCode == 200){
+      for (var jsonChapter in jsonResponse){
+        chapters.add(ChapterNameId.fromJson(jsonChapter));
+      }
+    }else{
+      throw jsonResponse['message'];
+    }
+  }catch(e){
+    return Future.error(e.toString());
   }
 
   return chapters;
 }
 
 Future<Chapter> fetchChapter(int id) async {
-  var res = await http.get(Uri.parse('$url/chapter/$id')).timeout(timeout);
-  var jsonChapter = jsonDecode(res.body);
+  Chapter chapter;
+  try{
+    var res = await http.get(Uri.parse('$url/chapter/$id')).timeout(timeout);
+    var jsonResponse = jsonDecode(res.body);
 
-  return Chapter.fromJson(jsonChapter);
+    if(res.statusCode == 200){
+      chapter = Chapter.fromJson(jsonResponse);
+    }else{
+      throw jsonResponse['message'];
+    }
+  }catch(e){
+    return Future.error(e.toString());
+  }
+
+
+  return chapter;
 }

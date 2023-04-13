@@ -52,7 +52,22 @@ class _ChaptersPageState extends State<ChaptersPage> {
                       );
                     },
                   ).build(context);
-                } else {
+                }  else if (snapshot.hasError) {
+                  return Stack(
+                      children: [
+                        Center(
+                          child: Text(
+                            snapshot.error.toString(),
+                            style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [],
+                        )
+                      ]
+                  );
+                }else {
                   // if data not loaded yet
                   return const CircularProgressIndicator();
                 }
