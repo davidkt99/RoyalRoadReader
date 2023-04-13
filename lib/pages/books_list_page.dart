@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:royal_reader/api/mutations.dart';
+import 'package:royal_reader/components/add_book_dialog.dart';
 import 'package:royal_reader/types/book.dart';
 import 'package:sizer/sizer.dart';
 
@@ -35,12 +37,32 @@ class _BooksPageState extends State<BooksPage> {
     });
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return const AddBookDialog();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _showMyDialog();
+              },
+              icon: Icon(
+                  Icons.add,
+                size: 7.w,
+              )
+          ),
+        ],
       ),
       body: Center(
         child: RefreshIndicator(
