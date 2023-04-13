@@ -16,14 +16,23 @@ class BooksPage extends StatefulWidget {
 }
 
 class _BooksPageState extends State<BooksPage> {
+  late Future<List<Book>> books;
+
+  @override
+  void initState() {
+    super.initState();
+    books = fetchBooks();
+  }
 
   void handleBookPressed(int id, String name){
     debugPrint('$id pressed');
     context.push(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
   }
 
-  Future<Future<List<Book>>> refreshBooks(BuildContext context) async {
-    return fetchBooks();
+  Future<void> refreshBooks() async {
+    setState(() {
+      books = fetchBooks();
+    });
   }
 
   @override
@@ -35,9 +44,9 @@ class _BooksPageState extends State<BooksPage> {
       ),
       body: Center(
         child: RefreshIndicator(
-          onRefresh: () => refreshBooks(context),
+          onRefresh: () => refreshBooks(),
           child: FutureBuilder(
-            future: fetchBooks(), // your async method that returns a future
+            future: books, // your async method that returns a future
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 // if data is loaded
@@ -55,7 +64,22 @@ class _BooksPageState extends State<BooksPage> {
                     );
                   },
                 ).build(context);
-              } else {
+              } else if (snapshot.hasError) {
+                return Stack(
+                  children: [
+                    Center(
+                      child: Text(
+                        snapshot.error.toString(),
+                        style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [],
+                    )
+                  ]
+                );
+              }else {
                 // if data not loaded yet
                 return const CircularProgressIndicator();
               }

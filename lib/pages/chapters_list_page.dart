@@ -17,14 +17,23 @@ class ChaptersPage extends StatefulWidget {
 }
 
 class _ChaptersPageState extends State<ChaptersPage> {
+  late Future<List<ChapterNameId>> chapters;
 
-  void _handleChapterPressed(int id, String name, List chapters){
+  @override
+  void initState() {
+    super.initState();
+    chapters = fetchChapterNamesAndIds(widget.id);
+  }
+
+  void handleChapterPressed(int id, String name, List chapters){
     debugPrint('$id pressed');
     context.pushNamed("chapter", params: {"id":id.toString()}, extra: chapters);
   }
 
-  Future<Future<List<ChapterNameId>>> _refreshChapters(BuildContext context, int id) async {
-    return fetchChapterNamesAndIds(id);
+  Future<void> refreshChapters(int id) async {
+    setState(() {
+      chapters = fetchChapterNamesAndIds(id);
+    });
   }
 
   @override
@@ -36,9 +45,9 @@ class _ChaptersPageState extends State<ChaptersPage> {
       ),
       body: Center(
           child: RefreshIndicator(
-            onRefresh: () => _refreshChapters(context, widget.id),
+            onRefresh: () => refreshChapters(widget.id),
             child: FutureBuilder(
-              future: fetchChapterNamesAndIds(widget.id), // your async method that returns a future
+              future: chapters, // your async method that returns a future
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   List chapterList = List.from(snapshot.data.reversed);
@@ -48,11 +57,26 @@ class _ChaptersPageState extends State<ChaptersPage> {
                     itemCount: chapterList.length,
                     itemBuilder: (BuildContext context, int i) {
                       return Center(
-                        child: ChapterListItem(id: i, name: chapterList[i].name, handleChapterPressed: _handleChapterPressed, chapters: chapterList,)
+                        child: ChapterListItem(id: i, name: chapterList[i].name, handleChapterPressed: handleChapterPressed, chapters: chapterList,)
                       );
                     },
                   ).build(context);
-                } else {
+                }  else if (snapshot.hasError) {
+                  return Stack(
+                      children: [
+                        Center(
+                          child: Text(
+                            snapshot.error.toString(),
+                            style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [],
+                        )
+                      ]
+                  );
+                }else {
                   // if data not loaded yet
                   return const CircularProgressIndicator();
                 }
