@@ -19,29 +19,39 @@ class ChapterContentPage extends StatefulWidget {
 }
 
 class _ChapterContentPageState extends State<ChapterContentPage> {
+  late Future<Chapter> chapter;
+
+  @override
+  void initState() {
+    super.initState();
+    chapter = fetchChapter(widget.chapters[widget.id].id);
+  }
+
+  bool previousButtonIsEnabled(int id, List chapters){
+    return id >= chapters.length-1;
+  }
+  bool nextButtonIsEnabled(int id, List chapters){
+    return id <= 0;
+  }
+
+
+  Future<void> refreshContent(int id, List chapters) async {
+    setState(() {
+      chapter = fetchChapter(chapters[id].id);
+    });
+  }
+
+  void handlePreviousChapter(int id, List chapters){
+    context.pushReplacementNamed("chapter", params: {"id":(id+1).toString()}, extra: chapters);
+  }
+
+  void handleNextChapter(int id, List chapters){
+    context.pushReplacementNamed("chapter", params: {"id":(id-1).toString()}, extra: chapters);
+  }
+
   @override
   Widget build(BuildContext context) {
     String name = widget.chapters[widget.id].name;
-
-    bool previousButtonIsEnabled(int id, List chapters){
-      return id >= chapters.length-1;
-    }
-    bool nextButtonIsEnabled(int id, List chapters){
-      return id <= 0;
-    }
-
-
-    Future<Future<Chapter>> refreshContent(BuildContext context, int id, List chapters) async {
-      return fetchChapter(chapters[id].id);
-    }
-
-    void handlePreviousChapter(int id, List chapters){
-      context.pushReplacementNamed("chapter", params: {"id":(id+1).toString()}, extra: chapters);
-    }
-
-    void handleNextChapter(int id, List chapters){
-      context.pushReplacementNamed("chapter", params: {"id":(id-1).toString()}, extra: chapters);
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -49,9 +59,9 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
       ),
       body: Center(
           child: RefreshIndicator(
-            onRefresh: () => refreshContent(context, widget.id, widget.chapters),
+            onRefresh: () => refreshContent(widget.id, widget.chapters),
             child: FutureBuilder(
-              future: fetchChapter(widget.chapters[widget.id].id), // your async method that returns a future
+              future: chapter, // your async method that returns a future
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   // if data is loaded
