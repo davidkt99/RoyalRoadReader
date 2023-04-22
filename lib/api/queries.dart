@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:royal_reader/api/util.dart';
-import 'package:royal_reader/types/book.dart';
-import 'package:royal_reader/types/chapter.dart';
+import 'package:royal_reader/booksList/book.dart';
+import 'package:royal_reader/chapterContent/chapter.dart';
 
-import '../types/chapterNameId.dart';
+import '../chaptersList/chapterNameId.dart';
 
 
 
