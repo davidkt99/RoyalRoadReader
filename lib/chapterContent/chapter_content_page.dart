@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/types/chapter.dart';
+import 'package:royal_reader/chapterContent/chapter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:styled_text/styled_text.dart';
 

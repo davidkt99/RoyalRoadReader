@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/pages/books_list_page.dart';
-import 'package:royal_reader/pages/chapter_content_page.dart';
-import 'package:royal_reader/pages/chapters_list_page.dart';
+import 'package:royal_reader/booksList/books_list_page.dart';
+import 'package:royal_reader/chapterContent/chapter_content_page.dart';
+import 'package:royal_reader/chaptersList/chapters_list_page.dart';
 import 'package:sizer/sizer.dart';
 
 

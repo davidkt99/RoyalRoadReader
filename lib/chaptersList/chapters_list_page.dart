@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/types/chapterNameId.dart';
+import 'package:royal_reader/chaptersList/chapterNameId.dart';
 import 'package:sizer/sizer.dart';
 
 import '../api/queries.dart';
-import '../components/chapter_list_item.dart';
+import 'chapter_list_item.dart';
 
 class ChaptersPage extends StatefulWidget {
   const ChaptersPage({super.key, required this.id, required this.bookName});
