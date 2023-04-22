@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_reader/api/mutations.dart';
-import 'package:royal_reader/booksList/add_book_dialog.dart';
+import 'package:royal_reader/addBook/add_book_dialog.dart';
 import 'package:royal_reader/booksList/book.dart';
 import 'package:sizer/sizer.dart';
 
