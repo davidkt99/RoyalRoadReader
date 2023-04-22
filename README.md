@@ -19,4 +19,6 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Notes
 
-api calls -> https://docs.flutter.dev/cookbook/networking/fetch-data
+api calls   -> https://docs.flutter.dev/cookbook/networking/fetch-data
+
+bloc        -> https://medium.com/@ajaychoudhary_/flutter-bloc-architecture-4208bc24453f
