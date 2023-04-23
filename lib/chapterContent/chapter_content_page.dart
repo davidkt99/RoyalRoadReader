@@ -53,6 +53,7 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
   Widget build(BuildContext context) {
     String name = widget.chapters[widget.id].name;
 
+
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
@@ -65,6 +66,7 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   // if data is loaded
+                  debugPrint(snapshot.data.content);
                   return Padding(
                     padding: EdgeInsets.only(
                       right: 4.w,
@@ -75,9 +77,10 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                         children: [
                           StyledText(
                             text: snapshot.data.content,
+                            style: TextStyle(fontSize: 4.w, height: 0.15.h),
                             tags: {
                               'strong': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
-                              'em': StyledTextTag(style: const TextStyle(fontStyle: FontStyle.italic))
+                              'em': StyledTextTag(style: const TextStyle(fontStyle: FontStyle.italic)),
                             },
                           ),
                           Row(
