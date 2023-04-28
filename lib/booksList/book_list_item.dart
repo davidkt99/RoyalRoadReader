@@ -22,7 +22,7 @@ class BookListItem extends StatelessWidget {
             height: 8.h,
             width: 90.h,
             child: Text(
-              "$name - $numOfChap",
+              name,
               style: TextStyle(color: Colors.black, fontSize: 2.h),
               textAlign: TextAlign.center,
             ),
