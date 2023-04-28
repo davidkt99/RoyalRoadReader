@@ -1,7 +1,6 @@
 
 //here goes the function
 import 'package:html/parser.dart';
-import 'package:styled_text/styled_text.dart';
 
 String? parseHtmlString(String htmlString) {
 

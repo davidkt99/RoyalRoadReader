@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_reader/chapterContent/chapter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:styled_text/styled_text.dart';
 
 import '../api/queries.dart';
 import '../util/style.dart';
@@ -75,12 +75,24 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          StyledText(
-                            text: snapshot.data.content,
-                            style: TextStyle(fontSize: 4.w, height: 0.15.h),
-                            tags: {
-                              'strong': StyledTextTag(style: const TextStyle(fontWeight: FontWeight.bold)),
-                              'em': StyledTextTag(style: const TextStyle(fontStyle: FontStyle.italic)),
+                          Html(
+                              data: snapshot.data.content,
+                            style: {
+                              "table": Style(
+                                backgroundColor: Colors.blue[100],
+                              ),
+                              "tr": Style(
+                                border: const Border(bottom: BorderSide(color: Colors.grey)),
+                              ),
+                              "th": Style(
+                                padding: const EdgeInsets.all(6),
+                                backgroundColor: Colors.grey,
+                              ),
+                              "td": Style(
+                                padding: const EdgeInsets.all(6),
+                                alignment: Alignment.topLeft,
+                              ),
+                              'h5': Style(maxLines: 2, textOverflow: TextOverflow.ellipsis),
                             },
                           ),
                           Row(
