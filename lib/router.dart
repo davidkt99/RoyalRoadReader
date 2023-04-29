@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import 'booksList/books_list_page.dart';
-import 'chapterContent/chapter_content_page.dart';
-import 'chaptersList/chapters_list_page.dart';
+import 'booksListPage/books_list_page.dart';
+import 'chapterContentPage/chapter_content_page.dart';
+import 'chaptersListPage/chapters_list_page.dart';
+import 'loginPage/loginPage.dart';
 
 /// The route configuration.
 final GoRouter router = GoRouter(
@@ -11,9 +12,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const BooksPage(title: 'Books');
+        return const LoginPage();
       },
       routes: <RouteBase>[
+        GoRoute(
+          path: 'books',
+          name: "booksList",
+          builder: (BuildContext context, GoRouterState state) {
+            return const BooksPage(title: 'Books');
+          },
+        ),
         GoRoute(
           path: 'book/:id',
           name: "book",

@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/chapterContent/chapter.dart';
 import 'package:sizer/sizer.dart';
 
 import '../api/queries.dart';
 import '../util/style.dart';
+import 'chapter.dart';
 
 class ChapterContentPage extends StatefulWidget {
   const ChapterContentPage({super.key, required this.id, required this.chapters});

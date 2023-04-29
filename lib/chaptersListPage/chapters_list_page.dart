@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:royal_reader/chaptersList/chapterNameId.dart';
 import 'package:sizer/sizer.dart';
 
 import '../api/queries.dart';
+import 'chapterNameId.dart';
 import 'chapter_list_item.dart';
 
 class ChaptersPage extends StatefulWidget {
@@ -86,7 +86,7 @@ class _ChaptersPageState extends State<ChaptersPage> {
                         ),
                         ListView(
                           physics: const AlwaysScrollableScrollPhysics(),
-                          children: [],
+                          children: const [],
                         )
                       ]
                   );
