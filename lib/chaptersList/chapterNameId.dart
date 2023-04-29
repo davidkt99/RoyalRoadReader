@@ -2,7 +2,7 @@ import '../util/parsers.dart';
 
 class ChapterNameId {
   final int id;
-  final String? name;
+  final String name;
 
   const ChapterNameId({
     required this.id,
@@ -12,7 +12,7 @@ class ChapterNameId {
   factory ChapterNameId.fromJson(Map<String, dynamic> json) {
     return ChapterNameId(
       id: json['id'],
-      name: parseHtmlString(json['name']),
+      name: parseHtmlString(json['name']) ?? "null",
     );
   }
 }

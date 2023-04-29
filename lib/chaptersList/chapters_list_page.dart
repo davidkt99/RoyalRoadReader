@@ -18,6 +18,7 @@ class ChaptersPage extends StatefulWidget {
 
 class _ChaptersPageState extends State<ChaptersPage> {
   late Future<List<ChapterNameId>> chapters;
+  bool reverseList = true;
 
   @override
   void initState() {
@@ -42,6 +43,19 @@ class _ChaptersPageState extends State<ChaptersPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.bookName),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  reverseList = !reverseList;
+                });
+              },
+              icon: Icon(
+                Icons.swap_vert,
+                size: 7.w,
+              )
+          ),
+        ],
       ),
       body: Center(
           child: RefreshIndicator(
@@ -50,7 +64,7 @@ class _ChaptersPageState extends State<ChaptersPage> {
               future: chapters, // your async method that returns a future
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  List chapterList = List.from(snapshot.data.reversed);
+                  List<ChapterNameId> chapterList = List.from(reverseList ? snapshot.data.reversed : snapshot.data );
                   // if data is loaded
                   return ListView.builder(
                     padding: EdgeInsets.all(4.w),
