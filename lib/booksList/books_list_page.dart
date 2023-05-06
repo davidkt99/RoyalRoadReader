@@ -78,10 +78,8 @@ class _BooksPageState extends State<BooksPage> {
                   itemBuilder: (BuildContext context, int i) {
                     return Center(
                       child: BookListItem(
-                        id: snapshot.data[i].id,
-                        name: snapshot.data[i].name,
+                        book: snapshot.data[i],
                         handleBookPressed: handleBookPressed,
-                        numOfChap: snapshot.data[i].numOfChap,
                       ),
                     );
                   },
