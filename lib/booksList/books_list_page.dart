@@ -59,7 +59,7 @@ class _BooksPageState extends State<BooksPage> {
               },
               icon: Icon(
                   Icons.add,
-                size: 7.w,
+                size: 3.h,
               )
           ),
         ],

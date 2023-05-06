@@ -52,7 +52,7 @@ class _ChaptersPageState extends State<ChaptersPage> {
               },
               icon: Icon(
                 Icons.swap_vert,
-                size: 7.w,
+                size: 3.h,
               )
           ),
         ],
