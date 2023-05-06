@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:royal_reader/router.dart';
+import 'package:royal_reader/styles.dart';
 import 'package:sizer/sizer.dart';
 
 
@@ -18,9 +19,8 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+          theme: Styles.themeData(false, context),
+          darkTheme: Styles.themeData(true, context),
           routerConfig: router,
         );
       }

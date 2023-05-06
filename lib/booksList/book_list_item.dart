@@ -41,12 +41,12 @@ class BookListItem extends StatelessWidget {
                           children: [
                             Text(
                               book.name,
-                              style: TextStyle(color: Colors.black, fontSize: 1.7.h),
+                              style: TextStyle(fontSize: 1.7.h),
                               textAlign: TextAlign.left,
                             ),
                             Text(
                               "by ${book.author}",
-                              style: TextStyle(color: Colors.black, fontSize: 1.5.h),
+                              style: TextStyle(fontSize: 1.5.h),
                               textAlign: TextAlign.left,
                             ),
                           ],
@@ -56,12 +56,12 @@ class BookListItem extends StatelessWidget {
                           children: [
                             Text(
                               "${book.numOfChap}",
-                              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 1.5.h),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 1.5.h),
                               textAlign: TextAlign.right,
                             ),
                             Text(
                               " Chapters",
-                              style: TextStyle(color: Colors.black, fontSize: 1.5.h),
+                              style: TextStyle(fontSize: 1.5.h),
                               textAlign: TextAlign.right,
                             ),
                           ],

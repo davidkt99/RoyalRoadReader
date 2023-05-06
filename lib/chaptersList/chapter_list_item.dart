@@ -23,7 +23,7 @@ class ChapterListItem extends StatelessWidget {
             width: 90.h,
             child: Text(
               name,
-              style: TextStyle(color: Colors.black, fontSize: 2.h),
+              style: TextStyle(fontSize: 2.h),
               textAlign: TextAlign.center,
             ),
           ),
