@@ -71,7 +71,7 @@ class _ChaptersPageState extends State<ChaptersPage> {
                     itemCount: chapterList.length,
                     itemBuilder: (BuildContext context, int i) {
                       return Center(
-                        child: ChapterListItem(id: i, name: chapterList[i].name, handleChapterPressed: handleChapterPressed, chapters: chapterList,)
+                        child: ChapterListItem(loc: i, chapter: chapterList[i], handleChapterPressed: handleChapterPressed, chapters: chapterList,)
                       );
                     },
                   ).build(context);
