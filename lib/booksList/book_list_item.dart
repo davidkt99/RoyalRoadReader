@@ -3,10 +3,11 @@ import 'package:royal_reader/booksList/book.dart';
 import 'package:sizer/sizer.dart';
 
 class BookListItem extends StatelessWidget {
-  const BookListItem({Key? key, required this.book, required this.handleBookPressed}) : super(key: key);
+  const BookListItem({Key? key, required this.book, required this.handleBookPressed, required this.handleDeleteDialog}) : super(key: key);
 
   final Book book;
   final Function handleBookPressed;
+  final Function handleDeleteDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,9 @@ class BookListItem extends StatelessWidget {
       child: InkWell(
         onTap: () {
           handleBookPressed(book.id, book.name);
+        },
+        onLongPress: () {
+          handleDeleteDialog(book.id);
         },
         child: Padding(
           padding: EdgeInsets.all(2.w),

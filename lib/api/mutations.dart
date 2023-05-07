@@ -25,3 +25,21 @@ Future<bool> addBook(String bookUrl) async {
     return Future.error(e.toString());
   }
 }
+
+Future<bool> deleteBook(String id) async {
+
+  try{
+    var res = await http.post(
+      Uri.parse('$url/delete/$id')
+    );
+    debugPrint(res.body.toString());
+    var jsonResponse = jsonDecode(res.body);
+    if(res.statusCode == 200) {
+      return jsonResponse == "true";
+    }else{
+      throw jsonResponse['message'];
+    }
+  } catch (e) {
+    return Future.error(e.toString());
+  }
+}

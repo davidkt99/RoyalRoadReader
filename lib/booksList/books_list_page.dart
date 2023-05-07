@@ -37,11 +37,20 @@ class _BooksPageState extends State<BooksPage> {
     });
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showAddBookDialog() async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return const AddBookDialog();
+      },
+    );
+  }
+
+  Future<void> _showDeleteBookDialog(int id) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return deleteBookDialog(id);
       },
     );
   }
@@ -55,7 +64,7 @@ class _BooksPageState extends State<BooksPage> {
         actions: [
           IconButton(
               onPressed: () {
-                _showMyDialog();
+                _showAddBookDialog();
               },
               icon: Icon(
                   Icons.add,
@@ -71,6 +80,24 @@ class _BooksPageState extends State<BooksPage> {
             future: books, // your async method that returns a future
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
+                // if data is null
+                if (snapshot.data.length == 0) {
+                  return Stack(
+                    children: [
+                      const Center(
+                        child: Text(
+                          'No books found',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [],
+                      )
+                    ]
+                  );
+                }
+
                 // if data is loaded
                 return ListView.builder(
                   padding: EdgeInsets.all(4.w),
@@ -80,6 +107,7 @@ class _BooksPageState extends State<BooksPage> {
                       child: BookListItem(
                         book: snapshot.data[i],
                         handleBookPressed: handleBookPressed,
+                        handleDeleteDialog: _showDeleteBookDialog,
                       ),
                     );
                   },
@@ -107,6 +135,35 @@ class _BooksPageState extends State<BooksPage> {
           ),
         )
       ),
+    );
+  }
+
+  Widget deleteBookDialog(int id) {
+    return AlertDialog(
+      title: const Text('Delete Book'),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: const <Widget>[
+            Text('Are you sure you want to delete this book?'),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: const Text('Yes'),
+          onPressed: () async {
+            await deleteBook(id.toString());
+            refreshBooks();
+            context.pop();
+          },
+        ),
+        TextButton(
+          child: const Text('No'),
+          onPressed: () {
+            context.pop();
+          },
+        ),
+      ],
     );
   }
 }

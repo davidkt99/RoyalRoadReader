@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:royal_reader/addBook/add_book_bloc.dart';
 
-import '../api/mutations.dart';
-
 class AddBookDialog extends StatefulWidget {
   const AddBookDialog({Key? key}) : super(key: key);
 
