@@ -37,36 +37,36 @@ class BookListItem extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(left: 4.w),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Text(
+                          book.name,
+                          style: TextStyle(fontSize: 1.7.h),
+                          textAlign: TextAlign.left,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              book.name,
-                              style: TextStyle(fontSize: 1.7.h),
-                              textAlign: TextAlign.left,
-                            ),
                             Text(
                               "by ${book.author}",
                               style: TextStyle(fontSize: 1.5.h),
                               textAlign: TextAlign.left,
                             ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "${book.numOfChap}",
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 1.5.h),
-                              textAlign: TextAlign.right,
-                            ),
-                            Text(
-                              " Chapters",
-                              style: TextStyle(fontSize: 1.5.h),
-                              textAlign: TextAlign.right,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "${book.numOfChap}",
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 1.5.h),
+                                  textAlign: TextAlign.right,
+                                ),
+                                Text(
+                                  " Chapters",
+                                  style: TextStyle(fontSize: 1.5.h),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ],
                             ),
                           ],
                         ),
