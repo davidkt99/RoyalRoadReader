@@ -6,6 +6,7 @@ import 'package:royal_reader/booksList/book.dart';
 import 'package:royal_reader/chapterContent/chapter.dart';
 
 import '../chaptersList/chapterNameId.dart';
+import '../weeklyChaptersList/update.dart';
 
 
 
@@ -63,7 +64,26 @@ Future<Chapter> fetchChapter(int id) async {
   }catch(e){
     return Future.error(e.toString());
   }
-
-
   return chapter;
+}
+
+Future<List<Update>> fetchUpdates() async {
+  List<Update> updates = [];
+  try {
+    var res = await http.get(Uri.parse('$url/updates')).timeout(
+        queryTimeout);
+    var jsonResponse = jsonDecode(res.body);
+
+    if (res.statusCode == 200) {
+      for (var jsonUpdate in jsonResponse){
+        updates.add(Update.fromJson(jsonUpdate));
+      }
+    } else {
+      throw jsonResponse['message'];
+    }
+  } catch (e) {
+    return Future.error(e.toString());
+  }
+
+  return updates;
 }

@@ -9,10 +9,11 @@ import '../api/queries.dart';
 import '../util/style.dart';
 
 class ChapterContentPage extends StatefulWidget {
-  const ChapterContentPage({super.key, required this.id, required this.chapters});
+  const ChapterContentPage({super.key, required this.loc, required this.chapters, this.nextButtonsEnabled = true});
 
-  final int id;
+  final int loc;
   final List chapters;
+  final bool nextButtonsEnabled;
 
   @override
   State<ChapterContentPage> createState() => _ChapterContentPageState();
@@ -24,7 +25,7 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
   @override
   void initState() {
     super.initState();
-    chapter = fetchChapter(widget.chapters[widget.id].id);
+    chapter = fetchChapter(widget.chapters[widget.loc].id);
   }
 
   bool previousButtonIsEnabled(int id, List chapters){
@@ -51,7 +52,7 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
 
   @override
   Widget build(BuildContext context) {
-    String name = widget.chapters[widget.id].name;
+    String name = widget.chapters[widget.loc].name;
 
 
     return Scaffold(
@@ -60,13 +61,12 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
       ),
       body: Center(
           child: RefreshIndicator(
-            onRefresh: () => refreshContent(widget.id, widget.chapters),
+            onRefresh: () => refreshContent(widget.loc, widget.chapters),
             child: FutureBuilder(
               future: chapter, // your async method that returns a future
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   // if data is loaded
-                  debugPrint(snapshot.data.content);
                   return Padding(
                     padding: EdgeInsets.only(
                       right: 4.w,
@@ -95,28 +95,31 @@ class _ChapterContentPageState extends State<ChapterContentPage> {
                               'h5': Style(maxLines: 2, textOverflow: TextOverflow.ellipsis),
                             },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: previousButtonIsEnabled(widget.id, widget.chapters)
-                                      ? null :
-                                      () {
-                                    handlePreviousChapter(widget.id, widget.chapters);
-                                  },
-                                  style: chapterNavButtonStyle,
-                                  child: const Text("Previous"),
-                              ),
-                              ElevatedButton(
-                                  onPressed: nextButtonIsEnabled(widget.id, widget.chapters)
-                                      ? null :
-                                      () {
-                                        handleNextChapter(widget.id, widget.chapters);
-                                  },
-                                  style: chapterNavButtonStyle,
-                                  child: const Text("Next")
-                              )
-                            ],
+                          Visibility(
+                            visible: widget.nextButtonsEnabled,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: previousButtonIsEnabled(widget.loc, widget.chapters)
+                                        ? null :
+                                        () {
+                                      handlePreviousChapter(widget.loc, widget.chapters);
+                                    },
+                                    style: chapterNavButtonStyle,
+                                    child: const Text("Previous"),
+                                ),
+                                ElevatedButton(
+                                    onPressed: nextButtonIsEnabled(widget.loc, widget.chapters)
+                                        ? null :
+                                        () {
+                                          handleNextChapter(widget.loc, widget.chapters);
+                                    },
+                                    style: chapterNavButtonStyle,
+                                    child: const Text("Next")
+                                )
+                              ],
+                            ),
                           ),
                           SizedBox(
                             height: 4.h,

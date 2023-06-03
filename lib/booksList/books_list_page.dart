@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:royal_reader/api/mutations.dart';
 import 'package:royal_reader/addBook/add_book_dialog.dart';
@@ -29,6 +30,10 @@ class _BooksPageState extends State<BooksPage> {
   void handleBookPressed(int id, String name){
     debugPrint('$id pressed');
     context.push(Uri(path: '/book/$id', queryParameters: {'name': name}).toString());
+  }
+
+  void handleWeeklyChapterPressed(){
+    context.pushNamed("updates");
   }
 
   Future<void> refreshBooks() async {
@@ -71,6 +76,15 @@ class _BooksPageState extends State<BooksPage> {
                 size: 3.h,
               )
           ),
+          IconButton(
+              onPressed: () {
+                handleWeeklyChapterPressed();
+              },
+              icon: Icon(
+                Icons.notifications,
+                size: 3.h,
+              )
+          ),
         ],
       ),
       body: Center(
@@ -92,7 +106,7 @@ class _BooksPageState extends State<BooksPage> {
                       ),
                       ListView(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        children: [],
+                        children: const [],
                       )
                     ]
                   );

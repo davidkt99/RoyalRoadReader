@@ -26,9 +26,9 @@ class _ChaptersPageState extends State<ChaptersPage> {
     chapters = fetchChapterNamesAndIds(widget.id);
   }
 
-  void handleChapterPressed(int id, String name, List chapters){
-    debugPrint('$id pressed');
-    context.pushNamed("chapter", params: {"id":id.toString()}, extra: chapters);
+  void handleChapterPressed(int loc, String name, List chapters){
+    debugPrint('$loc pressed');
+    context.pushNamed("chapter", params: {"loc":loc.toString()}, extra: chapters);
   }
 
   Future<void> refreshChapters(int id) async {
