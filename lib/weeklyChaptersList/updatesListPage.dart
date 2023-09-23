@@ -3,8 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:royal_reader/api/queries.dart';
 import 'package:royal_reader/chaptersList/chapterNameId.dart';
 import 'package:royal_reader/weeklyChaptersList/update.dart';
-import 'package:royal_reader/weeklyChaptersList/updateListItem.dart';
+import 'package:royal_reader/weeklyChaptersList/updatesByWeekDay.dart';
 import 'package:sizer/sizer.dart';
+import '../util/weekDayMap.dart';
 
 class UpdatesListPage extends StatefulWidget {
   const UpdatesListPage({Key? key}) : super(key: key);
@@ -60,13 +61,41 @@ class _UpdatesListPageState extends State<UpdatesListPage> {
                     ]
                 );
               }
-
-              return ListView.builder(
-                padding: EdgeInsets.all(4.w),
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, i) {
-                  return UpdateListItem(update: snapshot.data![i], handleUpdatePressed: handleUpdateChapterPressed);
-                },
+              var chaptersListByWeekday = <List<Update>>[
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+              ];
+              for (var update in snapshot.data!){
+                chaptersListByWeekday[update.weekDay].add(update);
+              }
+              chaptersListByWeekday.removeWhere((element) => element.isEmpty);
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                          UpdatesByWeekDay(title: "Today", updates: chaptersListByWeekday.last, handleUpdatePressed: handleUpdateChapterPressed),
+                        chaptersListByWeekday.length > 1 ? UpdatesByWeekDay(title: "Yesterday", updates: chaptersListByWeekday[chaptersListByWeekday.length-2], handleUpdatePressed: handleUpdateChapterPressed) : Container(),
+                    ],
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: chaptersListByWeekday.length-2,
+                      itemBuilder: (context, i) {
+                        return UpdatesByWeekDay(title: weekDayMap[i]!, updates: chaptersListByWeekday[i], handleUpdatePressed: handleUpdateChapterPressed);
+                      },
+                    ),
+                  ],
+                ),
               );
             } else if (snapshot.hasError) {
               return Center(child: Text('${snapshot.error}', style: const TextStyle(color: Colors.red)));

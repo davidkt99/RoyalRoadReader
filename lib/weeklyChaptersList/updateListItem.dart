@@ -47,11 +47,6 @@ class UpdateListItem extends StatelessWidget {
                             style: TextStyle(fontSize: 1.7.h, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.left,
                           ),
-                          Text(
-                            weekDayMap[update.weekDay],
-                            style: TextStyle(fontSize: 1.5.h),
-                            textAlign: TextAlign.left,
-                          ),
                         ],
                       ),
                     ),
